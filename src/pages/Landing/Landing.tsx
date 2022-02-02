@@ -1,30 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import './Landing.css';
 
 import search from '../../assets/search.svg';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
-import PokeCard from '../../components/PokeCard/PokeCard';
+import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
-import { sliceRawData } from '../../controllers/fetchController';
-
-const pokemons = [
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-];
+import { mapRawData, sliceRawData } from '../../controllers/fetchController';
 
 function Landing() {
+  const [pokemons, setPokemons] = useState<PokemonProps[]>()
+
   useEffect(() => {
     getPokemons()
       .then(response => {
-        console.log(sliceRawData(response.results, 50).next());
+        setPokemons(
+          sliceRawData(response.results, 50)
+            .next()
+            .value
+            .map(mapRawData))
       })
       .catch(error => {
         console.log(error.message);
@@ -89,7 +83,7 @@ function Landing() {
             </div>
           </div>
           <div className="content-pokedex">
-            {pokemons.map((pokemon, index) => {
+            {pokemons?.map((pokemon: PokemonProps, index: number) => {
               return (
                 <PokeCard
                   key={index}

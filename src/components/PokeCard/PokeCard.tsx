@@ -3,7 +3,7 @@ import { COLORS } from '../../utils';
 
 import './PokeCard.css';
 
-type PokemonProps = {
+export type PokemonProps = {
   national_number: string;
   spriteURL: string;
   name: string;
