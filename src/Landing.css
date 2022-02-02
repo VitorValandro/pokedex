@@ -55,6 +55,10 @@
 .landing-container
 > .landing-content{
   margin-top: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .landing-container
@@ -113,4 +117,14 @@
 > .filter-container
 > span.switch{
   margin-top: 10px;
+}
+
+.landing-container
+> .landing-content
+> .content-pokedex{
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 15px;
+    align-items: center;
 }

@@ -1,0 +1,33 @@
+.pokecard-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.pokecard-container
+> span{
+  width: 100%;
+}
+
+.pokecard-container
+> span.pokecard-number{
+  color: var(--gray);
+}
+
+.pokecard-container
+> span.pokecard-name{
+  color: var(--dark-grey);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.pokecard-container
+> .pokecard-type
+> span{
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--dragon);
+  border-radius: 10px;
+  margin: 5px 2.5px;
+}
