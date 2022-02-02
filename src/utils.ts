@@ -1,4 +1,7 @@
-
+/* 
+The COLORS constant keep all colors of application tracked.
+When adding a new color, add it to this array and nothing will break.
+*/
 export const COLORS: { [key: string]: string } = {
   "font": "#333333",
   "dark-gray": "#828282",
@@ -26,3 +29,12 @@ export const COLORS: { [key: string]: string } = {
   "electric": "#F8CF32",
   "fighting": "#C03228",
 }
+
+/* 
+The POKEMON_TYPES constant keep all pokemon's types of application tracked.
+When adding a new type, add it to this array and nothing will break.
+*/
+export const POKEMON_TYPES = [
+  'bug', 'dark', 'dragon', 'eletric', 'fairy', 'fighter', 'fire', 'flying', 'steel',
+  'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'water'
+];

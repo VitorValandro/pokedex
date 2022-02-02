@@ -29,6 +29,7 @@
     border-radius: 20px;
     border: 0;
     background-color: var(--light-gray);
+    font-size: 1rem;
 }
 
 .landing-container 
@@ -36,7 +37,7 @@
 > .landing-search-input 
 > img {
     width: 25px;
-    margin: 7.5px 10px;
+    margin: 9px 10px;
     position: absolute;
     right: 0;
 }
@@ -64,7 +65,7 @@
 .landing-container
 > .landing-content
 > .content-filters{
-    width: 17.5%;
+    width: 15%;
 }
 
 .landing-container
@@ -99,6 +100,8 @@
     background: 0;
     color: var(--red);
     transition: all .2s;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .landing-container
@@ -122,9 +125,10 @@
 .landing-container
 > .landing-content
 > .content-pokedex{
-    width: 75%;
+    width: 80%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 15px;
+    /* the calc below fill the unoccupied space with gap between cards*/
+    grid-gap: calc(80% / 5) * 5 - 100%;
     align-items: center;
 }

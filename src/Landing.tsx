@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header/Header';
 import './Landing.css';
 
 import search from './assets/search.svg';
 import ToggleSwitch from './components/ToggleSwitch/ToggleSwitch';
 import PokeCard from './components/PokeCard/PokeCard';
-
-const POKEMON_TYPES = [
-  'bug', 'dark', 'dragon', 'eletric', 'fairy', 'fighter', 'fire', 'flying', 'steel',
-  'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'water'
-];
-
+import { POKEMON_TYPES } from './utils';
 
 const pokemons = [
   {
@@ -79,6 +74,31 @@ const pokemons = [
 ];
 
 function Landing() {
+
+  useEffect(() => {
+    getPokemons()
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+  }, []);
+
+  async function getPokemons() {
+    // Async function to fetch the pokemons API and get the raw data
+    const response: Response = await fetch('https://unpkg.com/pokemons@1.1.0/pokemons.json');
+
+    // Handle errors
+    if (!response.ok) {
+      throw new Error(`An error has occured while fetching API: ${response.status}`);
+    }
+
+    // Return json
+    const pokemons = await response.json();
+    return pokemons;
+  }
+
   return (
     <>
       <Header />
