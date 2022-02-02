@@ -1,67 +1,14 @@
 import React, { useEffect } from 'react';
-import Header from './components/Header/Header';
+import Header from '../../components/Header/Header';
 import './Landing.css';
 
-import search from './assets/search.svg';
-import ToggleSwitch from './components/ToggleSwitch/ToggleSwitch';
-import PokeCard from './components/PokeCard/PokeCard';
-import { POKEMON_TYPES } from './utils';
+import search from '../../assets/search.svg';
+import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
+import PokeCard from '../../components/PokeCard/PokeCard';
+import { POKEMON_TYPES } from '../../utils';
+import { sliceRawData } from '../../controllers/fetchController';
 
 const pokemons = [
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
-  {
-    national_number: "001",
-    spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-    name: "Bulbasaur",
-    types: [
-      "Grass",
-      "Poison"
-    ]
-  },
   {
     national_number: "001",
     spriteURL: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
@@ -74,14 +21,13 @@ const pokemons = [
 ];
 
 function Landing() {
-
   useEffect(() => {
     getPokemons()
       .then(response => {
-        console.log(response)
+        console.log(sliceRawData(response.results, 50).next());
       })
       .catch(error => {
-        console.log(error.message)
+        console.log(error.message);
       })
   }, []);
 
@@ -143,9 +89,10 @@ function Landing() {
             </div>
           </div>
           <div className="content-pokedex">
-            {pokemons.map(pokemon => {
+            {pokemons.map((pokemon, index) => {
               return (
                 <PokeCard
+                  key={index}
                   national_number={pokemon.national_number}
                   spriteURL={pokemon.spriteURL}
                   name={pokemon.name}
