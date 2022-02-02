@@ -46,8 +46,71 @@
 > .landing-search-order
 > select#poke_order{
     margin-left: 15px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 20px;
     border-color: var(--red);
     color: var(--red);
+}
+
+.landing-container
+> .landing-content{
+  margin-top: 5%;
+}
+
+.landing-container
+> .landing-content
+> .content-filters{
+    width: 17.5%;
+}
+
+.landing-container
+> .landing-content
+> .content-filters
+> .filter-container{
+    margin-top: 20px;
+}
+
+.landing-container
+> .landing-content
+> .content-filters
+> .filter-container
+> .filter-types{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+    align-items: center;
+}
+
+.landing-container
+> .landing-content
+> .content-filters
+> .filter-container
+> .filter-types
+> button{
+    text-transform: capitalize;
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px solid var(--red);
+    background: 0;
+    color: var(--red);
+    transition: all .2s;
+}
+
+.landing-container
+> .landing-content
+> .content-filters
+> .filter-container
+> .filter-types
+> button:hover{
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.landing-container
+> .landing-content
+> .content-filters
+> .filter-container
+> span.switch{
+  margin-top: 10px;
 }
