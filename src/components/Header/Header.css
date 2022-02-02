@@ -1,0 +1,19 @@
+.header-container{
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  background-color: var(--red);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+}
+
+.header-content{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-items: center;
+  color: white;
+}
