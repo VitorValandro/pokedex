@@ -35,6 +35,6 @@ The POKEMON_TYPES constant keep all pokemon's types of application tracked.
 When adding a new type, add it to this array and nothing will break.
 */
 export const POKEMON_TYPES = [
-  'bug', 'dark', 'dragon', 'eletric', 'fairy', 'fighter', 'fire', 'flying', 'steel',
-  'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'water'
+  'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'Fire', 'Flying', 'Steel',
+  'Ghost', 'Grass', 'Ground', 'Ice', 'Normal', 'Poison', 'Psychic', 'Rock', 'Water'
 ];

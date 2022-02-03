@@ -110,7 +110,7 @@
 > .content-filters
 > .filter-container
 > .filter-types
-> button:hover{
+> .button-selected, button:hover{
     background-color: var(--red);
     color: var(--white);
 }
