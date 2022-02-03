@@ -3,7 +3,22 @@
   height: 175px;
   display: flex;
   flex-direction: column;
+  align-items: left;
   margin: 40px 10px;
+}
+
+.pokecard-container
+> .favorite-icon{
+  position: relative;
+}
+
+.pokecard-container
+> .favorite-icon
+> img{
+  position: absolute;
+  right: 0;
+  width: 20px;
+  cursor: pointer;
 }
 
 .pokecard-container

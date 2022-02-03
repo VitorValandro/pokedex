@@ -11,63 +11,88 @@ import { filterByType, searchPokemon, sortFunctions } from '../../controllers/fi
 
 function Landing() {
   const [data, setData] = useState<PokemonRawDataProps[]>([]);
-  const [pokemonsRaw, setPokemonsRaw] = useState<PokemonRawDataProps[]>();
+  const [pokemonsRaw, setPokemonsRaw] = useState<PokemonProps[]>();
   const [pokemons, setPokemons] = useState<PokemonProps[]>();
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [sortLiked, setSortLiked] = useState<boolean>(false);
   const [sortInput, setSortInput] = useState<string>('number_asc');
   const [searchInput, setSearchInput] = useState<string>('');
   const [filters, setFilters] = useState<string[]>([]);
   const national_numbers: string[] = [];
 
   useEffect(() => {
+    /*
+    * This is the Fetch effect. It raises only one time per loading and
+    * stores the raw data, so we can manipulate the API data without make a new request. 
+    */
     getPokemons()
       .then(response => {
-        console.log('FETCH')
-        setData(response.results);
+        setData(response.results); // store the response in data state
 
+        // event listener for infinite scroll feature
         document.getElementsByClassName('content-pokedex')[0]
           .addEventListener('scroll', handleScroll);
 
         setCurrentPage(1);
         setCurrentPage(2);
       })
+      // error handling
       .catch(error => {
         console.log(error.message);
       });
   }, []);
 
-  useEffect(() => {
-    console.log('SETTING')
-    setPokemonsRaw(
-      data
-        .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
-        .filter((pokemon: any) => searchPokemon(pokemon, searchInput))
-    )
-    setCurrentPage(1);
-  }, [data, filters, sortInput, searchInput]);
 
   useEffect(() => {
+    // Effect to manipulate the raw data (sort all and search all)
+    let pokemons = sanitizeRawData(data, national_numbers)
+      .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+      .filter((pokemon: any) => searchPokemon(pokemon, searchInput))
+
+    if (sortLiked) {
+      // to filter just the liked pokemons
+      pokemons = pokemons.filter((pokemon) => { return pokemon.liked })
+    }
+
+    setPokemonsRaw(pokemons)
+
+    setCurrentPage(1); // call the render use effect
+  }, [data, filters, sortInput, searchInput, sortLiked]);
+
+
+  useEffect(() => {
+    // Render effect for infinite list (no filters applied)
     if (filters?.length === 0) {
+      // Each page has fifty pokemons
       const slicedRawData = sliceRawData(pokemonsRaw || [], 50, currentPage);
-      setPokemons(
-        sanitizeRawData(slicedRawData, national_numbers)
-          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+
+      // Clean all data before render
+      let pokemons =
+        slicedRawData
           .filter(pokemon => searchPokemon(pokemon, searchInput))
-      );
+          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+
+      setPokemons(pokemons);
     }
   }, [currentPage, searchInput]);
 
+
   useEffect(() => {
+    // Render effect for type filters
     if (filters.length > 0) {
-      setPokemons(
-        sanitizeRawData(pokemonsRaw || [], national_numbers)
-          .filter(pokemon => filterByType(pokemon, filters || []))
-          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+
+      // Clean all data before render
+      let pokemons =
+        pokemonsRaw
+          ?.filter(pokemon => filterByType(pokemon, filters || []))
           .filter(pokemon => searchPokemon(pokemon, searchInput))
-      );
+          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+
+      setPokemons(pokemons);
     }
   }, [filters, sortInput, searchInput])
+
 
   const handleScroll = () => {
     // Function to manage the infinite scroll in pokemons list
@@ -81,6 +106,7 @@ function Landing() {
       setCurrentPage(currentPage => currentPage + 1);
     }
   }
+
 
   const handleSetFilter = (type: string, buttonIndex: number) => {
     const buttonElement = document.getElementsByClassName('filter-types-button')[buttonIndex];
@@ -103,13 +129,21 @@ function Landing() {
     setFilters([...filters || [], type])
   }
 
+
   const handleSort = (e: ChangeEvent<HTMLSelectElement>) => {
     setSortInput(e.target.value);
     setCurrentPage(0);
   }
 
+
   const handleSearch = (text: string) => {
     setSearchInput(text);
+    setCurrentPage(0);
+  }
+
+
+  const handleSortLiked = () => {
+    setSortLiked(!sortLiked);
     setCurrentPage(0);
   }
 
@@ -167,7 +201,9 @@ function Landing() {
             </div>
             <div className="filter-container">
               <span>Filtrar Favoritos</span>
-              <span className="switch"><ToggleSwitch /></span>
+              <span className="switch">
+                <ToggleSwitch onClick={handleSortLiked} />
+              </span>
             </div>
           </div>
           <div className="content-pokedex">
@@ -179,6 +215,7 @@ function Landing() {
                   spriteURL={pokemon.spriteURL}
                   name={pokemon.name}
                   types={pokemon.types}
+                  liked={pokemon.liked}
                 />
               )
             })}

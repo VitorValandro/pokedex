@@ -1,3 +1,5 @@
+import { PokemonProps } from "../components/PokeCard/PokeCard";
+
 // Async function to fetch the pokemons API and get the raw data
 export async function getPokemons() {
   const response: Response = await fetch('https://unpkg.com/pokemons@1.1.0/pokemons.json');
@@ -34,7 +36,7 @@ export type PokemonRawDataProps = {
   speed: number;
 }
 
-export function sliceRawData(data: PokemonRawDataProps[], range: number, page: number): PokemonRawDataProps[] {
+export function sliceRawData(data: PokemonProps[], range: number, page: number): PokemonProps[] {
   /*
   * This is a function to fake a pagination of API data.
   * It receives the raw fetched data and the range of slicing (how many elements per page)
@@ -64,7 +66,8 @@ function cleanRawData(pokemon: PokemonRawDataProps) {
     national_number: pokemon.national_number,
     spriteURL: pokemon.sprites.large,
     name: pokemon.name,
-    types: pokemon.type
+    types: pokemon.type,
+    liked: localStorage.getItem(pokemon.national_number) ? true : false
   }
 }
 
