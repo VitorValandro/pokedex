@@ -17,7 +17,11 @@ export function sortFunctions(a: PokemonProps, b: PokemonProps, key: string) {
   }
 }
 
-export function sortByNumber(a: PokemonProps, b: PokemonProps, descending: boolean) {
+export function searchPokemon(pokemon: PokemonProps, text: string) {
+  return pokemon.name.toLowerCase().search(text) !== -1;
+}
+
+function sortByNumber(a: PokemonProps, b: PokemonProps, descending: boolean) {
   if (a.national_number < b.national_number) {
     return descending ? 1 : -1;
   }

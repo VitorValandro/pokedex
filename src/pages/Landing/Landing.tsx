@@ -7,7 +7,7 @@ import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
 import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from '../../controllers/fetchController';
-import { filterByType, sortFunctions } from '../../controllers/filterController';
+import { filterByType, searchPokemon, sortFunctions } from '../../controllers/filterController';
 
 function Landing() {
   const [pokemonsRaw, setPokemonsRaw] = useState<PokemonRawDataProps[]>();
@@ -15,6 +15,7 @@ function Landing() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const [sortInput, setSortInput] = useState<string>('number_asc');
+  const [searchInput, setSearchInput] = useState<string>('');
   const [filters, setFilters] = useState<string[]>([]);
   const national_numbers: string[] = [];
 
@@ -22,7 +23,12 @@ function Landing() {
     getPokemons()
       .then(response => {
         console.log('a')
-        setPokemonsRaw(response.results.sort((a: any, b: any) => sortFunctions(a, b, sortInput)));
+        setPokemonsRaw(
+          //console.log(
+          response.results
+            .sort((a: any, b: any) => sortFunctions(a, b, sortInput))
+            .filter((pokemon: any) => searchPokemon(pokemon, searchInput))
+        )
         setCurrentPage(1);
 
         document.getElementsByClassName('content-pokedex')[0]
@@ -31,7 +37,7 @@ function Landing() {
       .catch(error => {
         console.log(error.message);
       });
-  }, [filters, sortInput]);
+  }, [filters, sortInput, searchInput]);
 
   useEffect(() => {
     if (filters?.length === 0) {
@@ -39,17 +45,21 @@ function Landing() {
       setPokemons(
         sanitizeRawData(slicedRawData, national_numbers)
           .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+        //.filter(pokemon => searchPokemon(pokemon, searchInput))
       );
     }
-  }, [currentPage]);
+  }, [currentPage, searchInput]);
 
   useEffect(() => {
-    setPokemons(
-      sanitizeRawData(pokemonsRaw || [], national_numbers)
-        .filter(pokemon => filterByType(pokemon, filters || []))
-        .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
-    );
-  }, [filters, sortInput])
+    if (filters.length > 0) {
+      setPokemons(
+        sanitizeRawData(pokemonsRaw || [], national_numbers)
+          .filter(pokemon => filterByType(pokemon, filters || []))
+          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+          .filter(pokemon => searchPokemon(pokemon, searchInput))
+      );
+    }
+  }, [filters, sortInput, searchInput])
 
   const handleScroll = () => {
     // Function to manage the infinite scroll in pokemons list
@@ -90,6 +100,11 @@ function Landing() {
     setCurrentPage(0);
   }
 
+  const handleSearch = (text: string) => {
+    setSearchInput(text);
+    //setCurrentPage(0);
+  }
+
   return (
     <>
       <Header />
@@ -102,6 +117,8 @@ function Landing() {
               id="poke-search"
               name="search"
               placeholder='Pesquisar por nome ou número'
+              autoComplete='off'
+              onChange={e => (handleSearch(e.target.value.toLowerCase()))}
             >
             </input>
             <img src={search} alt="" />
