@@ -38,6 +38,15 @@ body {
   background-color: var(--white);
 }
 
+*::-webkit-scrollbar {
+  width: 5px;               /* width of the entire scrollbar */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--red);    /* color of the scroll thumb */
+  border-radius: 30px;       /* roundness of the scroll thumb */ /* creates padding around scroll thumb */
+}
+
 *{
   margin: 0;
   box-sizing: border-box;

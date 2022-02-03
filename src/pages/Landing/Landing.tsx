@@ -6,43 +6,36 @@ import search from '../../assets/search.svg';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
-import { filterRawData, cleanRawData, sliceRawData, PokemonRawDataProps } from '../../controllers/fetchController';
+import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from '../../controllers/fetchController';
 
 function Landing() {
-  const [pokemons, setPokemons] = useState<PokemonProps[]>()
+  const [pokemons, setPokemons] = useState<PokemonProps[]>();
+  let infiniteScrollGenerator: IterableIterator<PokemonRawDataProps[]>;
   const national_numbers: string[] = [];
 
   useEffect(() => {
     getPokemons()
       .then(response => {
-        // Some functional programming to clean the fetched Data before use it in components
-        const slicedData = sliceRawData(response.results, 50).next().value;
+        infiniteScrollGenerator = sliceRawData(response.results, 50);
 
-        const filteredData = slicedData.filter((pokemon: PokemonRawDataProps, index: number) =>
-          filterRawData(pokemon, index, national_numbers));
+        setPokemons(sanitizeRawData(infiniteScrollGenerator, national_numbers));
 
-        const cleanedData = filteredData.map((pokemon: PokemonRawDataProps) =>
-          cleanRawData(pokemon));
-
-        setPokemons(cleanedData);
+        document.getElementsByClassName('content-pokedex')[0]
+          .addEventListener('scroll', () => { handleScroll(response.results) });
       })
       .catch(error => {
         console.log(error.message);
-      })
+      });
   }, []);
 
-  async function getPokemons() {
-    // Async function to fetch the pokemons API and get the raw data
-    const response: Response = await fetch('https://unpkg.com/pokemons@1.1.0/pokemons.json');
-
-    // Handle errors
-    if (!response.ok) {
-      throw new Error(`An error has occured while fetching API: ${response.status}`);
+  const handleScroll = (rawData: PokemonRawDataProps[]) => {
+    const infiniteScrollElement = document.getElementsByClassName('content-pokedex')[0];
+    if (infiniteScrollElement.scrollTop >= infiniteScrollElement.scrollHeight / 2) {
+      console.log(sanitizeRawData(infiniteScrollGenerator, national_numbers));
     }
+    console.log(infiniteScrollElement.scrollTop);
+    console.log(infiniteScrollElement.scrollHeight);
 
-    // Return json
-    const pokemons = await response.json();
-    return pokemons;
   }
 
   return (

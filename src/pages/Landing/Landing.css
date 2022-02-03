@@ -55,11 +55,12 @@
 
 .landing-container
 > .landing-content{
-  margin-top: 5%;
+  margin: 5% 0 10% 0;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 }
 
 .landing-container
@@ -131,4 +132,8 @@
     /* the calc below fill the unoccupied space with gap between cards*/
     grid-gap: calc((80% / 5) * 5 - 100%);
     align-items: center;
+
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
