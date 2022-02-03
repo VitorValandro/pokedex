@@ -18,7 +18,10 @@ export function sortFunctions(a: PokemonProps, b: PokemonProps, key: string) {
 }
 
 export function searchPokemon(pokemon: PokemonProps, text: string) {
-  return pokemon.name.toLowerCase().search(text) !== -1;
+  return (
+    pokemon.name.toLowerCase().search(text) !== -1
+    || pokemon.national_number.search(text) !== -1
+  )
 }
 
 function sortByNumber(a: PokemonProps, b: PokemonProps, descending: boolean) {

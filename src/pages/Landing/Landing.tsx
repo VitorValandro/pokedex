@@ -10,6 +10,7 @@ import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from 
 import { filterByType, searchPokemon, sortFunctions } from '../../controllers/filterController';
 
 function Landing() {
+  const [data, setData] = useState<PokemonRawDataProps[]>([]);
   const [pokemonsRaw, setPokemonsRaw] = useState<PokemonRawDataProps[]>();
   const [pokemons, setPokemons] = useState<PokemonProps[]>();
   const [currentPage, setCurrentPage] = useState(0);
@@ -22,22 +23,29 @@ function Landing() {
   useEffect(() => {
     getPokemons()
       .then(response => {
-        console.log('a')
-        setPokemonsRaw(
-          //console.log(
-          response.results
-            .sort((a: any, b: any) => sortFunctions(a, b, sortInput))
-            .filter((pokemon: any) => searchPokemon(pokemon, searchInput))
-        )
-        setCurrentPage(1);
+        console.log('FETCH')
+        setData(response.results);
 
         document.getElementsByClassName('content-pokedex')[0]
           .addEventListener('scroll', handleScroll);
+
+        setCurrentPage(1);
+        setCurrentPage(2);
       })
       .catch(error => {
         console.log(error.message);
       });
-  }, [filters, sortInput, searchInput]);
+  }, []);
+
+  useEffect(() => {
+    console.log('SETTING')
+    setPokemonsRaw(
+      data
+        .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
+        .filter((pokemon: any) => searchPokemon(pokemon, searchInput))
+    )
+    setCurrentPage(1);
+  }, [data, filters, sortInput, searchInput]);
 
   useEffect(() => {
     if (filters?.length === 0) {
@@ -45,7 +53,7 @@ function Landing() {
       setPokemons(
         sanitizeRawData(slicedRawData, national_numbers)
           .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
-        //.filter(pokemon => searchPokemon(pokemon, searchInput))
+          .filter(pokemon => searchPokemon(pokemon, searchInput))
       );
     }
   }, [currentPage, searchInput]);
@@ -102,7 +110,7 @@ function Landing() {
 
   const handleSearch = (text: string) => {
     setSearchInput(text);
-    //setCurrentPage(0);
+    setCurrentPage(0);
   }
 
   return (
