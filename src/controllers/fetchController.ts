@@ -34,23 +34,14 @@ export type PokemonRawDataProps = {
   speed: number;
 }
 
-export function* sliceRawData(data: PokemonRawDataProps[], range: number): IterableIterator<PokemonRawDataProps[]> {
+export function sliceRawData(data: PokemonRawDataProps[], range: number, page: number): PokemonRawDataProps[] {
   /*
-  * This is a generator function to fake a pagination of API data.
+  * This is a function to fake a pagination of API data.
   * It receives the raw fetched data and the range of slicing (how many elements per page)
   * and returns an Array with all elements in range.
-  * In the next call of the generator (when user scrolls until the end) we add to the current Array of pokemons
-  * the objects in next range.
   */
-  let index = 0;
-  let sliced_data: PokemonRawDataProps[] = [];
-  while (true) {
-    const data_fragment = data.slice(range * index, range * (index + 1));
-    sliced_data = data_fragment;
-    console.log(sliced_data)
-    index++;
-    yield [...sliced_data, ...data_fragment];
-  }
+  const data_fragment = data.slice(0, range * page);
+  return data_fragment;
 }
 
 function filterRawData(pokemon: PokemonRawDataProps, index: number, identifier: string[]) {
@@ -77,10 +68,9 @@ function cleanRawData(pokemon: PokemonRawDataProps) {
   }
 }
 
-export function sanitizeRawData(iterable: IterableIterator<PokemonRawDataProps[]>, national_numbers: string[]) {
+export function sanitizeRawData(data: PokemonRawDataProps[], national_numbers: string[]) {
   // Some functional programming to clean the fetched Data before use it in components
   //const slicedData = sliceRawData(data, 50).next().value;
-  const data = iterable.next().value;
 
   const filteredData = data.filter((pokemon: PokemonRawDataProps, index: number) =>
     filterRawData(pokemon, index, national_numbers));

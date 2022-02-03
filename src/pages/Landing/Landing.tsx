@@ -9,32 +9,36 @@ import { POKEMON_TYPES } from '../../utils';
 import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from '../../controllers/fetchController';
 
 function Landing() {
+  const [pokemonsRaw, setPokemonsRaw] = useState<PokemonRawDataProps[]>();
   const [pokemons, setPokemons] = useState<PokemonProps[]>();
-  let infiniteScrollGenerator: IterableIterator<PokemonRawDataProps[]>;
+  const [currentPage, setCurrentPage] = useState(0);
   const national_numbers: string[] = [];
 
   useEffect(() => {
     getPokemons()
       .then(response => {
-        infiniteScrollGenerator = sliceRawData(response.results, 50);
-
-        setPokemons(sanitizeRawData(infiniteScrollGenerator, national_numbers));
+        setPokemonsRaw(response.results);
+        setCurrentPage(1);
+        //setPokemons(sanitizeRawData(sliceRawData(response.results, 50, currentPage), national_numbers));
 
         document.getElementsByClassName('content-pokedex')[0]
-          .addEventListener('scroll', () => { handleScroll(response.results) });
+          .addEventListener('scroll', handleScroll);
       })
       .catch(error => {
         console.log(error.message);
       });
   }, []);
 
-  const handleScroll = (rawData: PokemonRawDataProps[]) => {
+  useEffect(() => {
+    const slicedRawData = sliceRawData(pokemonsRaw || [], 50, currentPage)
+    setPokemons(sanitizeRawData(slicedRawData, national_numbers));
+  }, [currentPage]);
+
+  const handleScroll = () => {
     const infiniteScrollElement = document.getElementsByClassName('content-pokedex')[0];
-    if (infiniteScrollElement.scrollTop >= infiniteScrollElement.scrollHeight / 2) {
-      console.log(sanitizeRawData(infiniteScrollGenerator, national_numbers));
+    if (infiniteScrollElement.scrollTop >= infiniteScrollElement.scrollHeight * 0.75) {
+      setCurrentPage(currentPage => currentPage + 1);
     }
-    console.log(infiniteScrollElement.scrollTop);
-    console.log(infiniteScrollElement.scrollHeight);
 
   }
 
