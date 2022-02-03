@@ -8,6 +8,7 @@ import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
 import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from '../../controllers/fetchController';
 import { filterByType, searchPokemon, sortFunctions } from '../../controllers/filterController';
+import Footer from '../../components/Footer/Footer';
 
 function Landing() {
   const [data, setData] = useState<PokemonRawDataProps[]>([]);
@@ -221,8 +222,9 @@ function Landing() {
             })}
           </div>
         </div>
-
       </div>
+
+      <Footer />
     </>
   );
 }
