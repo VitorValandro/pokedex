@@ -129,6 +129,6 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     /* the calc below fill the unoccupied space with gap between cards*/
-    grid-gap: calc(80% / 5) * 5 - 100%;
+    grid-gap: calc((80% / 5) * 5 - 100%);
     align-items: center;
 }

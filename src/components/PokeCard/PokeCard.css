@@ -1,13 +1,29 @@
 .pokecard-container{
   width: 100%;
+  height: 175px;
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 40px 10px;
 }
 
 .pokecard-container
 > span{
   width: 100%;
+}
+
+.pokecard-container
+> .pokecard-image{
+  height: auto;
+  max-height: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.pokecard-container
+> .pokecard-image
+> img{
+  max-width:100%;
+  max-height:100%;
 }
 
 .pokecard-container

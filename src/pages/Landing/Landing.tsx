@@ -6,19 +6,25 @@ import search from '../../assets/search.svg';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
-import { mapRawData, sliceRawData } from '../../controllers/fetchController';
+import { filterRawData, cleanRawData, sliceRawData, PokemonRawDataProps } from '../../controllers/fetchController';
 
 function Landing() {
   const [pokemons, setPokemons] = useState<PokemonProps[]>()
+  const national_numbers: string[] = [];
 
   useEffect(() => {
     getPokemons()
       .then(response => {
-        setPokemons(
-          sliceRawData(response.results, 50)
-            .next()
-            .value
-            .map(mapRawData))
+        // Some functional programming to clean the fetched Data before use it in components
+        const slicedData = sliceRawData(response.results, 50).next().value;
+
+        const filteredData = slicedData.filter((pokemon: PokemonRawDataProps, index: number) =>
+          filterRawData(pokemon, index, national_numbers));
+
+        const cleanedData = filteredData.map((pokemon: PokemonRawDataProps) =>
+          cleanRawData(pokemon));
+
+        setPokemons(cleanedData);
       })
       .catch(error => {
         console.log(error.message);
