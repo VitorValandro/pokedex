@@ -5,6 +5,15 @@
 
 Pokédex é um desafio técnico para uma vaga de Desenvolvedor Front-End.
 
+<div align="center">
+  <div align="center">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152440760-8ca27236-bbac-4332-bb2f-739a01185f3a.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152440907-5bb01e75-9ab7-429b-8726-866850a480b1.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152441144-b0a94de7-8bba-41b5-a290-5c088f2ea5cf.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152441308-2fc7cbc9-4d1b-4cdb-805e-be95aaede3d8.png">
+  </div>
+</div>
+
 ## Sobre o projeto
 Me diverti bastante desenvolvendo a página, e apliquei ao máximo meus conhecimentos técnicos no código. Manti a estrutura e código do projeto estruturados e escaláveis, e não usei bibliotecas externas ao React (exceto Jest para os testes automatizados), nem para a parte de componentização e nem para o fetch e tratamento de dados da API, fiz tudo com JavaScript ES6+ e o super set TypeScript para melhorar a produtividade e qualidade do desenvolvimento. Não usei nenhum pré-processador CSS.
 
