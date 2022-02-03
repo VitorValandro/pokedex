@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import './Landing.css';
 
@@ -7,20 +7,22 @@ import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import PokeCard, { PokemonProps } from '../../components/PokeCard/PokeCard';
 import { POKEMON_TYPES } from '../../utils';
 import { getPokemons, PokemonRawDataProps, sanitizeRawData, sliceRawData } from '../../controllers/fetchController';
-import { filterByType } from '../../controllers/filterController';
+import { filterByType, sortFunctions } from '../../controllers/filterController';
 
 function Landing() {
   const [pokemonsRaw, setPokemonsRaw] = useState<PokemonRawDataProps[]>();
   const [pokemons, setPokemons] = useState<PokemonProps[]>();
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [sortInput, setSortInput] = useState<string>('number_asc');
   const [filters, setFilters] = useState<string[]>([]);
   const national_numbers: string[] = [];
 
   useEffect(() => {
     getPokemons()
       .then(response => {
-        setPokemonsRaw(response.results);
+        console.log('a')
+        setPokemonsRaw(response.results.sort((a: any, b: any) => sortFunctions(a, b, sortInput)));
         setCurrentPage(1);
 
         document.getElementsByClassName('content-pokedex')[0]
@@ -29,49 +31,63 @@ function Landing() {
       .catch(error => {
         console.log(error.message);
       });
-  }, [filters]);
+  }, [filters, sortInput]);
 
   useEffect(() => {
     if (filters?.length === 0) {
       const slicedRawData = sliceRawData(pokemonsRaw || [], 50, currentPage);
       setPokemons(
         sanitizeRawData(slicedRawData, national_numbers)
+          .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
       );
     }
-
   }, [currentPage]);
 
   useEffect(() => {
     setPokemons(
       sanitizeRawData(pokemonsRaw || [], national_numbers)
         .filter(pokemon => filterByType(pokemon, filters || []))
+        .sort((a: any, b: any) => sortFunctions(a, b, sortInput) || 0)
     );
-  }, [filters])
+  }, [filters, sortInput])
 
   const handleScroll = () => {
+    // Function to manage the infinite scroll in pokemons list
     const infiniteScrollElement = document.getElementsByClassName('content-pokedex')[0];
+
+    // When user scrolled 75% of the list, render more elements
     if (
       infiniteScrollElement.scrollTop >= infiniteScrollElement.scrollHeight * 0.75
       && filters?.length === 0) {
+      // Increment the fake pagination to get more pokemons
       setCurrentPage(currentPage => currentPage + 1);
     }
   }
 
   const handleSetFilter = (type: string, buttonIndex: number) => {
     const buttonElement = document.getElementsByClassName('filter-types-button')[buttonIndex];
+
+    // if type already is in filters
     if (filters?.includes(type)) {
       buttonElement.classList.remove('button-selected');
-      filters.splice(filters?.indexOf(type), 1);
+      filters.splice(filters?.indexOf(type), 1); // remove from filters
       setFilters([...filters]);
 
       if (filters.length === 0) {
+        // if filters are cleared, render the infinite scroll list
         setCurrentPage(0);
       }
       return;
     }
 
     buttonElement.classList.add('button-selected');
+    // add type to filters
     setFilters([...filters || [], type])
+  }
+
+  const handleSort = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSortInput(e.target.value);
+    setCurrentPage(0);
   }
 
   return (
@@ -93,9 +109,15 @@ function Landing() {
 
           <div className="landing-search-order">
             <label htmlFor="order_by">Ordenar por</label>
-            <select name="order_by" id="poke_order">
-              <option defaultValue={1}>Menor número primeiro</option>
-              <option>Ordem alfabética</option>
+            <select
+              name="order_by"
+              id="poke_order"
+              onChange={e => handleSort(e)}
+            >
+              <option value='number_asc'>Menor número primeiro</option>
+              <option value='number_desc'>Maior número primeiro</option>
+              <option value='name_asc'>A - Z</option>
+              <option value='name_desc'>Z - A</option>
             </select>
           </div>
         </div>
