@@ -16,7 +16,7 @@ function Footer() {
             Não fiz as coisas do jeito mais simples, mas do jeito que eu programaria
             uma tela em um projeto real. Boa parte do meu conhecimento técnico
             está aplicado aqui, então acho que é uma avaliação justa.
-            Visite o <a href="#">repositório no Github</a> para saber mais.
+            Visite o <a href="https://github.com/VitorValandro/pokedex">repositório no Github</a> para saber mais.
           </span>
         </div>
       </div>
