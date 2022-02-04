@@ -12,6 +12,7 @@ Pokédex é um desafio técnico para uma vaga de Desenvolvedor Front-End.
     <img width="400" src="https://user-images.githubusercontent.com/50156875/152441144-b0a94de7-8bba-41b5-a290-5c088f2ea5cf.png">
     <img width="400" src="https://user-images.githubusercontent.com/50156875/152441308-2fc7cbc9-4d1b-4cdb-805e-be95aaede3d8.png">
   </div>
+  
 </div>
 
 ## Sobre o projeto
@@ -33,6 +34,7 @@ Achei o projeto completo e conseguiu abordar boa parte dos fundamentos usados em
 - Filtros da listagem:
   - Filtrar pelo tipo do pokemon;
   - Filtar pokemons favoritados;
+- Responsividade;
 
 ## Instalação
 
