@@ -38,3 +38,15 @@ export const POKEMON_TYPES = [
   'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'Fire', 'Flying', 'Steel',
   'Ghost', 'Grass', 'Ground', 'Ice', 'Normal', 'Poison', 'Psychic', 'Rock', 'Water'
 ];
+
+export async function checkImage(url: string) {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) throw await response.json();
+    return true;
+  }
+  catch (e) {
+    return false;
+  }
+}

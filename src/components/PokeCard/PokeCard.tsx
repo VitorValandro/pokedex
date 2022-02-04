@@ -4,6 +4,7 @@ import { COLORS } from '../../utils';
 import './PokeCard.css';
 import likeIcon from '../../assets/like.svg';
 import likeSolidIcon from '../../assets/like-solid.svg';
+import placeholder from '../../assets/placeholder.jpg';
 
 export type PokemonProps = {
   national_number: string;
@@ -41,7 +42,11 @@ function PokeCard({ national_number, spriteURL, name, types, liked }: PokemonPro
       }
 
       <div className="pokecard-image">
-        <img src={spriteURL} alt={name} />
+        <img
+          src={spriteURL}
+          alt={name}
+          onError={e => { const target = e.target as HTMLImageElement; target.onerror = null; target.src = placeholder }}
+        />
       </div>
       <span className="pokecard-number">{`Nº ${national_number}`}</span>
       <span className="pokecard-name">{name}</span>
