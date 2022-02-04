@@ -1,50 +1,79 @@
-<<<<<<< HEAD
-# Getting Started with Create React App
+<h1 align="center">
+  <img width="200px" src="https://user-images.githubusercontent.com/50156875/152416537-5557dd13-4fe4-4b9a-92e1-3c9a19562fbe.png"/>
+  <br />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pokédex é um desafio técnico para uma vaga de Desenvolvedor Front-End.
 
-## Available Scripts
+<div align="center">
+  <div align="center">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152440760-8ca27236-bbac-4332-bb2f-739a01185f3a.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152440907-5bb01e75-9ab7-429b-8726-866850a480b1.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152441144-b0a94de7-8bba-41b5-a290-5c088f2ea5cf.png">
+    <img width="400" src="https://user-images.githubusercontent.com/50156875/152441308-2fc7cbc9-4d1b-4cdb-805e-be95aaede3d8.png">
+  </div>
+</div>
 
-In the project directory, you can run:
+## Sobre o projeto
+Me diverti bastante desenvolvendo a página, e apliquei ao máximo meus conhecimentos técnicos no código. Manti a estrutura e código do projeto estruturados e escaláveis, e não usei bibliotecas externas ao React (exceto Jest para os testes automatizados), nem para a parte de componentização e nem para o fetch e tratamento de dados da API, fiz tudo com JavaScript ES6+ e o super set TypeScript para melhorar a produtividade e qualidade do desenvolvimento. Não usei nenhum pré-processador CSS.
 
-### `npm start`
+A principal dificuldade foi manipular os dados da API, que não tinha paginação ou filtros, então implementei uma paginação no client-side para melhorar a experiência do usuário através de uma lista de scroll infinito. Usei programação funcional para aplicar os filtros propostos, com os métodos `filter`,`sort` e `map` do protótipo `Array` do ES6. Não explorei muitos hooks do React porque não senti necessidade. Orientei o desenvolvimento com base nas estórias propostas e segui as imagens do design como referência, sem mudar muita coisa.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Achei o projeto completo e conseguiu abordar boa parte dos fundamentos usados em todos os projetos, então acho que é uma boa métrica de avaliação. Se quiser conversar e discutir o código e decisões técnicas, pode me chamar!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Consumo e tratamento dos dados da API;
+- Listagem de pokemons com scroll infinito;
+- Marcar pokemon como favorito (salvo no local storage do navegador);
+- Campo de busca reativo;
+- Ordenação da listagem:
+  - Pelo registro do pokemon (ascendente e descendente);
+  - Pelo nome do pokemon (A-Z e Z-A);
+- Filtros da listagem:
+  - Filtrar pelo tipo do pokemon;
+  - Filtar pokemons favoritados;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalação
 
-### `npm run build`
+### Requisitos
+- Git;
+- NodeJS;
+- Gerenciador de pacotes (npm ou yarn);
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Primeiro, clone o repositório:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/VitorValandro/pokedex
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Vá para o diretório do projeto e instale as dependências:
 
-### `npm run eject`
+```bash
+npm install ou yarn
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Antes de rodar o projeto, execute os testes automatizados:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm test ou yarn test
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Para executar o projeto em ambiente de desenvolvimento [localhost:3000]:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm start ou yarn start
+```
 
-## Learn More
+Para fazer o build da aplicação (diretório build):
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-=======
-# pokedex
->>>>>>> 0f473daf1291ef42e50dfbfa2dea4faa4e975b64
+## Final
+O projeto está em produção e rodando através da plataforma Vercel, [acesse aqui](https://pokedex-vitorvalandro.vercel.app).
+
+###### O design das páginas, ícones e artes não foram feitos por mim.
+
+###### Vitor Matheus Valandro da Rosa. February 2021.
