@@ -39,3 +39,12 @@
 > a {
   color: var(--grass)
 }
+
+@media (max-width: 900px){
+  .footer-container{
+    height: 50px;
+  }
+  .footer-content{
+    display: none;
+  }
+}

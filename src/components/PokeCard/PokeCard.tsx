@@ -4,6 +4,7 @@ import { COLORS } from '../../utils';
 import './PokeCard.css';
 import likeIcon from '../../assets/like.svg';
 import likeSolidIcon from '../../assets/like-solid.svg';
+import likeWhiteIcon from '../../assets/like-white.svg';
 import placeholder from '../../assets/placeholder.jpg';
 
 export type PokemonProps = {
@@ -56,6 +57,11 @@ function PokeCard({ national_number, spriteURL, name, types, liked }: PokemonPro
             <span style={{ backgroundColor: COLORS[type.toLowerCase()] }} key={type}>{type}</span>
           )
         })}
+      </div>
+      <div className="pokecard-actions">
+        <button onClick={() => handleFavorite(national_number)}>
+          <img src={likeWhiteIcon} alt='like' />
+        </button>
       </div>
     </div>
   );

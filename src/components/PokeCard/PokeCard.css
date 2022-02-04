@@ -62,3 +62,81 @@
   border-radius: 10px;
   margin: 5px 2.5px;
 }
+
+.pokecard-actions{
+  display: none;
+}
+
+@media (max-width: 900px){
+  .pokecard-actions{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 25px;
+    margin-top: 10px;
+  }
+
+  .pokecard-actions
+  > button{
+    background-color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    border:0;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+   .pokecard-actions
+  > button:hover{
+    background-color: var(--fire);
+  }
+
+  .pokecard-actions
+  > button
+  > img{
+    max-width:100%;
+    max-height:90%;
+  }
+
+  .pokecard-container, .pokecard-container > span {
+    text-align: center;
+    align-items: center;
+  }
+
+  .pokecard-container
+  > .pokecard-image{
+    height: auto;
+    max-height: 60%;
+    display: flex;
+    justify-content: center;
+  }
+
+   .pokecard-container
+  > .favorite-icon{
+    width: 70%;
+  }
+  .pokecard-container
+  > .favorite-icon
+  > img{
+    position: absolute;
+    right: 0;
+    width: 20px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 700px){
+    .pokecard-container
+  > .pokecard-image{
+    height: auto;
+    max-height: 70%;
+    display: flex;
+    justify-content: center;
+  }
+    .pokecard-actions
+  > button{
+    width: 80%;
+  }
+}

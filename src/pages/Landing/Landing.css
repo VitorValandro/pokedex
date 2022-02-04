@@ -60,7 +60,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 
 .landing-container
@@ -128,7 +127,7 @@
 > .content-pokedex{
     width: 80%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 20%);
     /* the calc below fill the unoccupied space with gap between cards*/
     grid-gap: calc((80% / 5) * 5 - 100%);
     align-items: center;
@@ -136,4 +135,70 @@
     height: 70vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-right: 15px;
+}
+
+@media (max-width: 900px){
+.landing-container{
+    width: 90%;
+}
+
+.landing-container
+> .landing-content
+> .content-pokedex{
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+
+@media (max-width: 700px){
+.landing-container
+>.landing-search-container{
+  flex-direction: column;
+}
+
+.landing-container 
+> .landing-search-container
+> .landing-search-input {
+    width: 100%;
+}
+
+.landing-container 
+> .landing-search-container
+> .landing-search-order{
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-container 
+> .landing-search-container
+> .landing-search-order
+> select#poke_order{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.landing-container
+> .landing-content{
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-container
+> .landing-content
+> .content-filters{
+    width: 100%;
+}
+
+.landing-container
+> .landing-content
+> .content-pokedex{
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10%;
+    padding: 0;
+}
 }
